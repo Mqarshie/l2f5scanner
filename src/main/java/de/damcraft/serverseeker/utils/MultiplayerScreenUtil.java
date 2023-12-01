@@ -7,29 +7,21 @@ import net.minecraft.client.network.ServerInfo;
 public class MultiplayerScreenUtil {
 
     public static void addInfoToServerList(MultiplayerScreen mps, ServerInfo info) {
-        MultiplayerScreenAccessor mpsAccessor = (MultiplayerScreenAccessor) mps;
-        mps.getServerList().add(info, false);
-        mps.getServerList().saveFile();
-        mpsAccessor.getServerListWidget().setServers(mps.getServerList());
+        addInfoToServerListInternal(mps, info, false);
     }
+
     public static void addInfoToServerList(MultiplayerScreen mps, ServerInfo info, boolean reload) {
-        MultiplayerScreenAccessor mpsAccessor = (MultiplayerScreenAccessor) mps;
-        mps.getServerList().add(info, false);
-        if (reload) mpsAccessor.getServerListWidget().setServers(mps.getServerList());
+        addInfoToServerListInternal(mps, info, reload);
     }
 
     public static void addNameIpToServerList(MultiplayerScreen mps, String name, String ip) {
-        MultiplayerScreenAccessor mpsAccessor = (MultiplayerScreenAccessor) mps;
-        ServerInfo info = new ServerInfo(name, ip, ServerInfo.ServerType.OTHER);
-        mps.getServerList().add(info, false);
-        mpsAccessor.getServerListWidget().setServers(mps.getServerList());
-        mps.getServerList().saveFile();
+        ServerInfo info = new ServerInfo(name, "", ServerInfo.ServerType.OTHER); // Empty IP
+        addInfoToServerListInternal(mps, info, false);
     }
+
     public static void addNameIpToServerList(MultiplayerScreen mps, String name, String ip, boolean reload) {
-        MultiplayerScreenAccessor mpsAccessor = (MultiplayerScreenAccessor) mps;
-        ServerInfo info = new ServerInfo(name, ip, ServerInfo.ServerType.OTHER);
-        mps.getServerList().add(info, false);
-        if (reload) mpsAccessor.getServerListWidget().setServers(mps.getServerList());
+        ServerInfo info = new ServerInfo(name, "", ServerInfo.ServerType.OTHER); // Empty IP
+        addInfoToServerListInternal(mps, info, reload);
     }
 
     public static void reloadServerList(MultiplayerScreen mps) {
@@ -38,6 +30,13 @@ public class MultiplayerScreenUtil {
     }
 
     public static void saveList(MultiplayerScreen mps) {
+        mps.getServerList().saveFile();
+    }
+
+    private static void addInfoToServerListInternal(MultiplayerScreen mps, ServerInfo info, boolean reload) {
+        MultiplayerScreenAccessor mpsAccessor = (MultiplayerScreenAccessor) mps;
+        mps.getServerList().add(info, false);
+        if (reload) mpsAccessor.getServerListWidget().setServers(mps.getServerList());
         mps.getServerList().saveFile();
     }
 }

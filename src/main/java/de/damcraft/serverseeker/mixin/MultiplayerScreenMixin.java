@@ -29,7 +29,7 @@ public abstract class MultiplayerScreenMixin extends Screen {
         // Add a button which sets the current screen to the ServerSeekerScreen
         this.addDrawableChild(
             new ButtonWidget.Builder(
-                Text.literal("ServerSeeker"),
+                Text.literal("find servers"),
                 onPress -> {
                     if (this.client == null) return;
                     this.client.setScreen(new ServerSeekerScreen((MultiplayerScreen) (Object) this));
@@ -43,7 +43,7 @@ public abstract class MultiplayerScreenMixin extends Screen {
         // Add a button to get the info of the selected server
         this.getInfoButton = this.addDrawableChild(
             new ButtonWidget.Builder(
-                Text.literal("Get players"),
+                Text.literal("get player info"),
                 onPress -> {
                     if (this.client == null) return;
                     MultiplayerServerListWidget.Entry entry = this.serverListWidget.getSelectedOrNull();
